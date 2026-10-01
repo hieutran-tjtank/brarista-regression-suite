@@ -1,0 +1,95 @@
+{
+  "client": "LemonadeDolls",
+  "market": "UK",
+  "sizing_systems": ["UK", "US"],
+  "band_range": { "min": 30, "max": 42 },
+  "cup_range": { "min": "A", "max": "G" },
+  "product_types": ["lingerie", "swimwear"],
+  "special_rules": [
+    "Uses UK sizing as primary, US as secondary display",
+    "Swimwear may differ from bra sizing by 1 band",
+    "UK DD maps to US DD/E (not DDD)"
+  ],
+  "test_cases": [
+    {
+      "id": "LD-001",
+      "description": "Standard UK — 78/93",
+      "input": { "underbust_cm": 78, "overbust_cm": 93 },
+      "expected": { "band": 32, "cup": "DD", "full_size": "32DD" },
+      "tags": ["standard", "smoke"],
+      "notes": "78cm=30.7\" → ceil 31, odd +1 → band 32. 93cm=36.6\", diff=4.6 → round 5 → DD"
+    },
+    {
+      "id": "LD-002",
+      "description": "Cross-system — 80/100",
+      "input": { "underbust_cm": 80, "overbust_cm": 100 },
+      "expected": { "band": 32, "cup": "F", "full_size": "32F" },
+      "tags": ["standard"],
+      "notes": "diff=7.4 → round 7 → F. US equivalent would be DDD/F"
+    },
+    {
+      "id": "LD-003",
+      "description": "Small — 70/73",
+      "input": { "underbust_cm": 70, "overbust_cm": 73 },
+      "expected": { "band": 28, "cup": "A", "full_size": "28A" },
+      "tags": ["boundary", "small"],
+      "notes": "Band 28 below range (min 30). Should suggest sister size or flag."
+    },
+    {
+      "id": "LD-004",
+      "description": "Mid-range — 88/98 → 36C",
+      "input": { "underbust_cm": 88, "overbust_cm": 98 },
+      "expected": { "band": 36, "cup": "C", "full_size": "36C" },
+      "tags": ["standard"]
+    },
+    {
+      "id": "LD-005",
+      "description": "Large cup — 80/108",
+      "input": { "underbust_cm": 80, "overbust_cm": 108 },
+      "expected": { "band": 32, "cup": "H", "full_size": "32H" },
+      "tags": ["boundary", "large-cup"],
+      "notes": "diff=10.5 → round 11 → H. Exceeds LD max G — should flag."
+    },
+    {
+      "id": "LD-006",
+      "description": "Extreme cup — 80/115",
+      "input": { "underbust_cm": 80, "overbust_cm": 115 },
+      "expected": { "band": 32, "cup": "J", "full_size": "32J" },
+      "tags": ["out-of-range"],
+      "notes": "diff=13.3 → round 13 → J. Far exceeds LD max G."
+    },
+    {
+      "id": "LD-007",
+      "description": "Swimwear — 83/95",
+      "input": { "underbust_cm": 83, "overbust_cm": 95 },
+      "expected": { "band": 34, "cup": "C", "full_size": "34C" },
+      "tags": ["swimwear", "standard"],
+      "product_type": "swimwear"
+    },
+    {
+      "id": "LD-008",
+      "description": "Recalibration — dress UK 16, trust measurement",
+      "input": { "underbust_cm": 80, "overbust_cm": 95, "dress_size": "UK 16" },
+      "expected": { "band": 32, "cup": "DD", "full_size": "32DD" },
+      "tags": ["recalibration", "trust-measurement"],
+      "notes": "Dress UK 16 → band 38 vs measure band 32. Diff=6 > 2 → conflict detected but default trusts measurement"
+    },
+    {
+      "id": "LD-009",
+      "description": "Recalibration — trust dress size",
+      "input": { "underbust_cm": 80, "overbust_cm": 95, "dress_size": "UK 16" },
+      "options": { "recalibrate": true },
+      "expected": { "band": 38, "cup": "AA", "full_size": "38AA" },
+      "tags": ["recalibration", "trust-dress"],
+      "notes": "Recal band=38, overbust=37.4\", diff=-0.6 → round -1 → clamp 0 → AA"
+    },
+    {
+      "id": "LD-010",
+      "description": "Sister sizing — 83/96 → 34D",
+      "input": { "underbust_cm": 83, "overbust_cm": 96 },
+      "expected": { "band": 34, "cup": "D", "full_size": "34D" },
+      "sister_sizes": { "bandUp": "36C", "bandDown": "32DD" },
+      "tags": ["sister-sizing"]
+    }
+  ]
+}

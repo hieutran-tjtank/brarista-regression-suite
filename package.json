@@ -1,0 +1,19 @@
+{
+  "name": "brarista-regression-suite",
+  "version": "1.0.0",
+  "description": "Sizing engine regression test suite — per-client isolation, CI-integrated",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:engine": "npx playwright test --project=engine",
+    "test:clients": "npx playwright test --project=clients",
+    "test:onboarding": "npx playwright test --project=onboarding",
+    "test:client": "npx playwright test --project=clients --grep",
+    "report": "npx playwright show-report reports"
+  },
+  "keywords": ["qa", "regression", "sizing", "brarista"],
+  "author": "Hieu Tran",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

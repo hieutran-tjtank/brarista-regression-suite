@@ -1,0 +1,90 @@
+{
+  "client": "Boobydoo",
+  "market": "UK",
+  "sizing_systems": ["UK", "EU"],
+  "band_range": { "min": 28, "max": 48 },
+  "cup_range": { "min": "A", "max": "K" },
+  "product_types": ["bra", "sports_bra", "swimwear"],
+  "special_rules": [
+    "UK DD = US DD/E (not DDD)",
+    "Uses UK cup progression as primary"
+  ],
+  "test_cases": [
+    {
+      "id": "BD-001",
+      "description": "Standard UK conversion — 80/100",
+      "input": { "underbust_cm": 80, "overbust_cm": 100 },
+      "expected": { "band": 32, "cup": "F", "full_size": "32F" },
+      "tags": ["standard", "smoke"],
+      "notes": "80cm=31.5\" → ceil 32, 100cm=39.4\", diff=7.4 → round 7 → F"
+    },
+    {
+      "id": "BD-002",
+      "description": "Inch formula verification — 85/97",
+      "input": { "underbust_cm": 85, "overbust_cm": 97 },
+      "expected": { "band": 34, "cup": "D", "full_size": "34D" },
+      "tags": ["standard", "inch-formula"],
+      "notes": "85cm=33.5\" → ceil 34, 97cm=38.2\", diff=4.2 → round 4 → D"
+    },
+    {
+      "id": "BD-003",
+      "description": "Small band — boundary 26",
+      "input": { "underbust_cm": 63, "overbust_cm": 78 },
+      "expected": { "band": 26, "cup": "DD", "full_size": "26DD" },
+      "tags": ["boundary", "small-band"]
+    },
+    {
+      "id": "BD-004",
+      "description": "Large band — boundary 44",
+      "input": { "underbust_cm": 110, "overbust_cm": 125 },
+      "expected": { "band": 44, "cup": "DD", "full_size": "44DD" },
+      "tags": ["boundary", "large-band"]
+    },
+    {
+      "id": "BD-005",
+      "description": "A cup — minimal difference",
+      "input": { "underbust_cm": 75, "overbust_cm": 78 },
+      "expected": { "band": 30, "cup": "A", "full_size": "30A" },
+      "tags": ["boundary", "small-cup"]
+    },
+    {
+      "id": "BD-006",
+      "description": "Recalibration — dress size close to measurement (no conflict)",
+      "input": { "underbust_cm": 90, "overbust_cm": 100, "dress_size": "UK 12" },
+      "expected": { "band": 36, "cup": "C", "full_size": "36C" },
+      "tags": ["recalibration", "trust-measurement"],
+      "notes": "Dress UK 12 → band 34, measure → band 36. Diff=2, not > 2 → no conflict"
+    },
+    {
+      "id": "BD-007",
+      "description": "Recalibration — dress conflicts, trust dress path",
+      "input": { "underbust_cm": 80, "overbust_cm": 95, "dress_size": "UK 16" },
+      "options": { "recalibrate": true },
+      "expected": { "band": 38, "cup": "AA", "full_size": "38AA" },
+      "tags": ["recalibration", "trust-dress"],
+      "notes": "Dress UK 16 → band 38, overbust 37.4\", diff=-0.6 → round -1 → clamp 0 → AA"
+    },
+    {
+      "id": "BD-008",
+      "description": "Large cup — G range (75/98)",
+      "input": { "underbust_cm": 75, "overbust_cm": 98 },
+      "expected": { "band": 30, "cup": "G", "full_size": "30G" },
+      "tags": ["edge-case", "large-cup"],
+      "notes": "75cm=29.5\" → ceil 30, 98cm=38.6\", diff=8.6 → round 9 → G"
+    },
+    {
+      "id": "BD-009",
+      "description": "Mid-range — 80/93",
+      "input": { "underbust_cm": 80, "overbust_cm": 93 },
+      "expected": { "band": 32, "cup": "DD", "full_size": "32DD" },
+      "tags": ["standard"]
+    },
+    {
+      "id": "BD-010",
+      "description": "Odd underbust — rounding 77/95",
+      "input": { "underbust_cm": 77, "overbust_cm": 95 },
+      "expected": { "band": 32, "cup": "DD", "full_size": "32DD" },
+      "tags": ["rounding", "inch-formula"]
+    }
+  ]
+}
