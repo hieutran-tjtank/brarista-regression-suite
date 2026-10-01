@@ -1,0 +1,37 @@
+{
+  "client": "ClientTestCI",
+  "market": "US",
+  "sizing_systems": ["US"],
+  "band_range": { "min": 30, "max": 44 },
+  "cup_range": { "min": "A", "max": "G" },
+  "product_types": ["bra"],
+  "special_rules": [
+    "Test client for CI workflow verification",
+    "US cup progression: DD/E, DDD/F (different from UK)"
+  ],
+  "test_cases": [
+    {
+      "id": "CI-001",
+      "description": "Standard US conversion — 80/95",
+      "input": { "underbust_cm": 80, "overbust_cm": 95 },
+      "expected": { "band": 32, "cup": "DD/E", "full_size": "32DD/E" },
+      "tags": ["standard", "smoke"],
+      "notes": "80cm=31.5\" → band 32, diff=5.4 → round 5 → US cup index 5 = DD/E"
+    },
+    {
+      "id": "CI-002",
+      "description": "Mid-range — 88/98",
+      "input": { "underbust_cm": 88, "overbust_cm": 98 },
+      "expected": { "band": 36, "cup": "C", "full_size": "36C" },
+      "tags": ["standard"]
+    },
+    {
+      "id": "CI-003",
+      "description": "Large cup — G range (US)",
+      "input": { "underbust_cm": 80, "overbust_cm": 98 },
+      "expected": { "band": 32, "cup": "G", "full_size": "32G" },
+      "tags": ["boundary", "US-specific"],
+      "notes": "diff=6.6 → round 7 → US cup index 7 = G"
+    }
+  ]
+}
