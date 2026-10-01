@@ -1,13 +1,25 @@
 # Brarista Sizing Engine Regression Suite
 
-> **Trả lời câu hỏi từ Bella (R2 interview):**
-> "Mỗi khách hàng có sizing spec riêng. Khi onboard client mới, existing clients break.
-> Anh apply automation thế nào?"
+> Each client has its own sizing specification, but all share a single Global Sizing Engine.
+> When onboarding a new client, engine updates risk breaking existing clients.
+> **This suite prevents that.**
 
 ## What This Does
 
 Automated regression testing for Brarista's Global Sizing Engine.
 Ensures that updating the engine for one client doesn't break sizing for others.
+
+> [!IMPORTANT]
+> The `engine/` folder is a **simulation placeholder**. It mimics expected sizing behavior
+> based on publicly available information, so the test suite can run and demonstrate the architecture.
+> When integrated with Brarista's actual codebase, replace the simulation with the real engine import:
+> ```js
+> // Before (simulation):
+> const { calculateSize } = require('./engine/SizingEngine');
+> // After (real):
+> const { calculateSize } = require('@brarista/sizing-engine');
+> ```
+> Everything else — client configs, test structure, CI — stays the same.
 
 ## Quick Start
 

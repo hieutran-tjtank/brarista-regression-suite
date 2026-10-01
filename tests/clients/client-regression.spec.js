@@ -42,8 +42,22 @@ for (const file of clientFiles) {
       const system = (clientData.sizing_systems && clientData.sizing_systems[0]) || 'UK';
       const options = tc.options || {};
 
-      test(`${tc.id}: ${tc.description}`, () => {
+      test(`${tc.id}: ${tc.description}`, async ({}, testInfo) => {
         const result = calculateSize(tc.input, system, options);
+
+        // Attach details to report (visible even when pass)
+        testInfo.annotations.push({
+          type: 'Input',
+          description: JSON.stringify(tc.input),
+        });
+        testInfo.annotations.push({
+          type: 'Expected',
+          description: tc.expected ? tc.expected.full_size : 'N/A',
+        });
+        testInfo.annotations.push({
+          type: 'Actual',
+          description: result.full_size,
+        });
 
         // Verify expected output
         if (tc.expected) {

@@ -8,15 +8,15 @@
 
 ## Context
 
-**Origin:** During R2 interview with Bella (2026-10-01), she asked:
+**Origin:** During the R2 interview, a key pain point was raised:
 
-> "Mỗi khách hàng đều có sizing spec riêng, nhưng hệ thống có 1 Global Sizing Engine.
-> Khi onboard client mới → engine update → existing clients break.
-> Anh nghĩ sẽ apply automation thế nào?"
+> Each client has its own sizing specification, but all clients share a single Global Sizing Engine.
+> When onboarding a new client, engine updates risk breaking sizing accuracy for existing clients.
+> This is currently the most frequent failure mode in the system.
 
-**My answer at the time:** "Hiện tại anh chưa nghĩ ra được."
+**The challenge:** Design an automation strategy that prevents cross-client regression whenever the sizing engine is updated.
 
-**This project:** The answer I should have given — implemented as a working solution.
+**This project:** A working implementation of that strategy.
 
 ---
 
