@@ -1,0 +1,33 @@
+{
+  "_comment": "TEMPLATE — Copy this file and rename to {client_name}.json when onboarding a new client.",
+  "_instructions": [
+    "1. Copy this file: cp _template.json newclient.json",
+    "2. Fill in client details and sizing rules",
+    "3. Add test_cases with known input → expected output pairs",
+    "4. Run: npx playwright test --grep 'NewClient' to validate",
+    "5. Commit & push — CI will include this client in regression from now on"
+  ],
+  "client": "ClientName",
+  "market": "UK",
+  "sizing_systems": ["UK"],
+  "band_range": { "min": 28, "max": 50 },
+  "cup_range": { "min": "A", "max": "K" },
+  "product_types": ["bra"],
+  "special_rules": [],
+  "test_cases": [
+    {
+      "id": "XX-001",
+      "description": "Standard conversion — no edge cases",
+      "input": {
+        "underbust_cm": 80,
+        "overbust_cm": 100
+      },
+      "expected": {
+        "band": 32,
+        "cup": "DD",
+        "full_size": "32DD"
+      },
+      "tags": ["standard", "smoke"]
+    }
+  ]
+}

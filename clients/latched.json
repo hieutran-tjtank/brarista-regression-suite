@@ -1,0 +1,77 @@
+{
+  "client": "Latched",
+  "market": "UK",
+  "sizing_systems": ["UK"],
+  "band_range": { "min": 30, "max": 44 },
+  "cup_range": { "min": "B", "max": "HH" },
+  "product_types": ["nursing_bra", "maternity_bra"],
+  "special_rules": [
+    "Nursing bras may run 1 cup larger due to milk production",
+    "Recommend measuring during feeding for accurate fit",
+    "Limited band range compared to standard bra retailers"
+  ],
+  "test_cases": [
+    {
+      "id": "LT-001",
+      "description": "Standard nursing bra — 80/95",
+      "input": { "underbust_cm": 80, "overbust_cm": 95 },
+      "expected": { "band": 32, "cup": "DD", "full_size": "32DD" },
+      "tags": ["standard", "smoke"],
+      "notes": "80cm=31.5\" → band 32, 95cm=37.4\", diff=5.4 → round 5 → DD"
+    },
+    {
+      "id": "LT-002",
+      "description": "Lower band — 70/85",
+      "input": { "underbust_cm": 70, "overbust_cm": 85 },
+      "expected": { "band": 28, "cup": "DD", "full_size": "28DD" },
+      "tags": ["boundary"],
+      "notes": "Band 28 below Latched min (30). Engine calculates correctly, range check is separate."
+    },
+    {
+      "id": "LT-003",
+      "description": "Upper band — 105/120",
+      "input": { "underbust_cm": 105, "overbust_cm": 120 },
+      "expected": { "band": 42, "cup": "DD", "full_size": "42DD" },
+      "tags": ["boundary", "large-band"]
+    },
+    {
+      "id": "LT-004",
+      "description": "Large cup — G range (75/100)",
+      "input": { "underbust_cm": 75, "overbust_cm": 100 },
+      "expected": { "band": 30, "cup": "G", "full_size": "30G" },
+      "tags": ["large-cup"],
+      "notes": "75cm=29.5\" → band 30, 100cm=39.4\", diff=9.4 → round 9 → G"
+    },
+    {
+      "id": "LT-005",
+      "description": "Very large cup — J range (80/115)",
+      "input": { "underbust_cm": 80, "overbust_cm": 115 },
+      "expected": { "band": 32, "cup": "J", "full_size": "32J" },
+      "tags": ["boundary", "max-cup"],
+      "notes": "diff=13.3 → round 13 → J. Exceeds Latched max HH — should flag out-of-range."
+    },
+    {
+      "id": "LT-006",
+      "description": "Extreme cup — K range (75/115)",
+      "input": { "underbust_cm": 75, "overbust_cm": 115 },
+      "expected": { "band": 30, "cup": "K", "full_size": "30K" },
+      "tags": ["out-of-range", "error-handling"],
+      "notes": "diff=15.3 → round 15 → K (clamped to max). Far exceeds Latched max HH."
+    },
+    {
+      "id": "LT-007",
+      "description": "Maternity — 83/98",
+      "input": { "underbust_cm": 83, "overbust_cm": 98 },
+      "expected": { "band": 34, "cup": "DD", "full_size": "34DD" },
+      "tags": ["maternity", "standard"]
+    },
+    {
+      "id": "LT-008",
+      "description": "Recalibration — 85/100, dress UK 14",
+      "input": { "underbust_cm": 85, "overbust_cm": 100, "dress_size": "UK 14" },
+      "expected": { "band": 34, "cup": "DD", "full_size": "34DD" },
+      "tags": ["recalibration", "trust-measurement"],
+      "notes": "Dress UK 14 → band 36, measure → band 34. Diff=2, not > 2 → no conflict"
+    }
+  ]
+}
