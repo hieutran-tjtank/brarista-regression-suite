@@ -155,4 +155,4 @@ Dev changes sizing engine → Push PR → CI auto-runs 93 tests
 
 ---
 
-Built by Hieu Tran | [Task Log](docs/TASK_LOG.md)
+Built by Hieu Tran | [Task Log](docs/TASK_LOG.md) | [QA Auto-Test Guide](docs/qa_autotest_guide.md)
